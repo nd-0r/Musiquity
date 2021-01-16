@@ -16,18 +16,6 @@
     font-size: 12px;
     text-align: center;
 }
-#left {
-    width: 25%;
-    background: lightgreen;
-}
-#middle {
-    width: 50%;
-    background: grey;
-}
-#right {
-    width: 25%; 
-    background: pink;
-}
 
 /* Add a black background color to the top navigation bar */
 .topnav {
@@ -84,7 +72,10 @@
     }
 }
 
-.search {
-    margin-right: 50px;
+.column {
+    float: left;
+    width: 25%;
 }
+
+
 
