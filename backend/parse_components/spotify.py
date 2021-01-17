@@ -14,6 +14,28 @@ def parse_link(link):
     link (string): the link to parse
 
   Returns:
-    query (Query): the query object used to look up
+    query (Query): a query object used to look up
     the item on other platforms
   '''
+
+  if (not isinstance(link, str)):
+    raise TypeError(f'Cannot parse link of type: {type(link)}')
+
+  url = ''
+  item_id = ''
+  head2 = {
+    "Authorization": "Bearer " + os.getenv('SPOTIFY_OAUTH')
+  }
+
+  if ('album' in link):
+    url = 'https://api.spotify.com/v1/albums/'
+  elif ('track' in link):
+    url = 'https://api.spotify.com/v1/tracks/'
+  else:
+    raise ValueError(f'"{link}" is not a valid spotify \
+                       link to an album or song')
+
+  url_to_submit = url + item_id
+  query_response = requests.request('GET', url_to_submit, headers = head2)
+  print(query_response.json()['artists'][0]['name'])
+  print(query_response.json()['name'])
