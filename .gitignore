@@ -61,5 +61,5 @@ Temporary Items
 # Ignore all local history of files
 .history
 
-./backend/test.py
+test.py
 
