@@ -73,7 +73,7 @@ def search_spotify(user_query, result_limit=1, **kwargs):
 
   for album in query_response.json()['albums']['items']:
     try:
-      tmp = Query(
+      tmp = Media(
         artist_name=album['artists'][0]['name'],
         title=album['name'],
         link=album['external_urls']['spotify'],
