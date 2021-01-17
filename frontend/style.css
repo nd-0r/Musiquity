@@ -107,5 +107,11 @@ li {
 input {
     width: 30%;
 }
+div h2 {
+    width: 100%;
+    margin-left: -23%;
+    margin-bottom: 5%;
+    font-family: 'Montserrat', sans-serif;
+}
 
 
