@@ -1,12 +1,12 @@
 from ..classes.media import Media
 from ..classes.query import Query
 import requests
-import os
+from decouple import config
 import base64
 
 # get the Oauth token
-client_id = os.getenv('SPOTIFY_CLIENT')
-client_secret = os.getenv('SPOTIFY_SECRET')
+client_id = config('SPOTIFY_CLIENT')
+client_secret = config('SPOTIFY_SECRET')
 bytes_obj = bytes(client_id + ':' + client_secret, 'utf-8')
 auth_string = base64.urlsafe_b64encode(bytes_obj)
 head = {
@@ -17,7 +17,7 @@ dat = {
 }
 url = 'https://accounts.spotify.com/api/token'
 temp = requests.request('POST', url, headers=head, data=dat)
-os.environ['SPOTIFY_OAUTH'] = temp.json()['access_token']
+SPOTIFY_OAUTH = temp.json()['access_token']
 
 
 class Spotify:
@@ -68,7 +68,7 @@ class Spotify:
 
     try:
       head = {
-          "Authorization": "Bearer " + os.getenv('SPOTIFY_OAUTH')
+          "Authorization": "Bearer " + SPOTIFY_OAUTH
       }
     except EnvironmentError:
       raise RuntimeError(f'Cannot get environment variable $SPOTIFY_OAUTH')
@@ -136,7 +136,7 @@ class Spotify:
     url = ''
     item_id = ''
     head2 = {
-      "Authorization": "Bearer " + os.getenv('SPOTIFY_OAUTH')
+      "Authorization": "Bearer " + config('SPOTIFY_OAUTH')
     }
 
     m_type = ''

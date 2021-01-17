@@ -1,6 +1,6 @@
 from ..classes.media import Media
 from ..classes.query import Query
-import os
+from decouple import config
 from urllib.parse import urlparse
 from googleapiclient.discovery import build
 
@@ -52,7 +52,7 @@ class YouTube:
     youtube = build(
       "youtube",
       "v3",
-      developerKey = os.getenv('YOUTUBE_API_KEY')
+      developerKey = config('YOUTUBE_API_KEY')
     )
 
     request = youtube.search().list(
@@ -116,7 +116,7 @@ class YouTube:
     youtube = build(
       "youtube",
       "v3",
-      developerKey = os.getenv('YOUTUBE_API_KEY')
+      developerKey = config('YOUTUBE_API_KEY')
     )
 
     request = youtube.videos().list(
