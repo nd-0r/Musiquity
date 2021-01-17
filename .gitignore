@@ -62,4 +62,4 @@ Temporary Items
 .history
 
 test.py
-
+*.env

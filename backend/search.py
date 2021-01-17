@@ -37,8 +37,3 @@ def uri_validator(uri):
     return all([result.scheme, result.netloc, result.path])
   except ValueError:
     return False
-
-if __name__ == '__main__':
-  q = input('Enter a search query: ')
-  search(q)
-
