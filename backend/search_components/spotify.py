@@ -4,7 +4,7 @@ import requests
 import os
 import base64
 
-# get the Oauth token
+# get the Oauth tokens
 client_id = os.getenv('SPOTIFY_CLIENT')
 client_secret = os.getenv('SPOTIFY_SECRET')
 bytes_obj = bytes(client_id + ':' + client_secret, 'utf-8')
@@ -65,22 +65,41 @@ def search_spotify(user_query, result_limit=1, **kwargs):
 
   url = BASE_URL + query + '&' + media_type + '&' + limit
   query_response = requests.request('GET', url, headers = head)
-
   if (query_response.status_code != 200):
     raise RuntimeError(f'Cannot get information from Spotify API. Server returned \
                          status code: {query_response.status_code} with reason: \
                          {query_response.reason}')
-
-  for album in query_response.json()['albums']['items']:
-    try:
-      tmp = Media(
-        artist_name=album['artists'][0]['name'],
-        title=album['name'],
-        link=album['external_urls']['spotify'],
-        image_url=album['images'][0],
-        markets=album['available_markets']
-      )
-    except KeyError:
-      raise RuntimeError(f'Could not get all information for the query from spotify')
-    out.append(tmp)
+  try:
+    for album in query_response.json()['albums']['items']:
+      try:
+        tmp = Media(
+          artist_name=album['artists'][0]['name'],
+          title=album['name'],
+          link=album['external_urls']['spotify'],
+          image_url=album['images'][0],
+          markets=album['available_markets'],
+          media_type='album'
+        )
+      except KeyError:
+        raise RuntimeError(f'Could not get all information for the query from spotify')
+      out.append(tmp)
+  except KeyError:
+    pass
+  try:
+    for song in query_response.json()['tracks']['items']:
+      try:
+        tmp = Media(
+          artist_name=song['artists'][0]['name'],
+          title=song['name'],
+          link=song['external_urls']['spotify'],
+          image_url=song['images'][0],
+          markets=song['available_markets'],
+          media_type='song'
+        )
+      except KeyError:
+        raise RuntimeError(f'Could not get all information for the query from spotify')
+      out.append(tmp)
+  except KeyError:
+    pass
   return out
+  
