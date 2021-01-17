@@ -1,5 +1,6 @@
 from ..classes.media import Media
 from ..classes.query import Query
+from ..proper_noun_extractor import proper_noun_extractor
 from decouple import config
 from urllib.parse import urlparse
 from googleapiclient.discovery import build
@@ -89,6 +90,7 @@ class YouTube:
                              query from spotify')
       out.append(tmp1)
       out.append(tmp2)
+    return out
 
   @staticmethod
   def parse_link(link):
@@ -124,8 +126,9 @@ class YouTube:
       id = video_id
     )
     response = request.execute()
+    title_tmp = response['items'][0]['snippet']['title']
 
     return Query(
-      response['items'][0]['snippet']['title'],
+      proper_noun_extractor(title_tmp),
       media_type='song'
     )

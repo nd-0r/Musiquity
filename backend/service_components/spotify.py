@@ -1,6 +1,7 @@
 from ..classes.media import Media
 from ..classes.query import Query
 import requests
+import json
 from decouple import config
 import base64
 
@@ -54,10 +55,10 @@ class Spotify:
     limit = 'limit=' + str(result_limit)
 
     if (isinstance(user_query, Query)):
-      query = "q=" + user_query.get_title()
-      if (query.is_song()):
+      query = "q=" + user_query.title
+      if (user_query.is_song()):
         media_type = 'type=track'
-      elif (query.is_album()):
+      elif (user_query.is_album()):
         media_type = 'type=album'
       else:
         media_type = 'type=album,track'
@@ -102,7 +103,7 @@ class Spotify:
             artist_name=song['artists'][0]['name'],
             title=song['name'],
             link=song['external_urls']['spotify'],
-            image_url=song['images'][0],
+            image_url=song['album']['images'][0],
             markets=song['available_markets'],
             media_type='song'
           )
@@ -134,9 +135,9 @@ class Spotify:
       raise TypeError(f'Cannot parse link of type: {type(link)}')
 
     url = ''
-    item_id = ''
+    item_id = link.split('/')[-1]
     head2 = {
-      "Authorization": "Bearer " + config('SPOTIFY_OAUTH')
+      "Authorization": "Bearer " + SPOTIFY_OAUTH
     }
 
     m_type = ''
@@ -152,6 +153,9 @@ class Spotify:
 
     url_to_submit = url + item_id
     query_response = requests.request('GET', url_to_submit, headers = head2)
+    if (query_response.status_code != 200):
+      print(json.dumps(query_response.json(), indent=1))
+      raise RuntimeError(f'Cannot get information from Spotify API:')
 
     return Query(
       query_response.json()['name'],

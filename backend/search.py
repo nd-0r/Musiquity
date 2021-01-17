@@ -1,8 +1,8 @@
-from classes.media import Media
-from classes.query import Query
+from backend.classes.media import Media
+from backend.classes.query import Query
+from backend.parse_url import parse_url
+from backend.services import services
 from urllib.parse import urlparse
-from parse_url import parse_url
-from services import services
 
 def search(text):
   user_query = None
@@ -10,7 +10,7 @@ def search(text):
     out = {}
     user_query = parse_url(text)
     for service in services.keys():
-      if user_query.service == service:
+      if user_query.from_service == service:
         continue
       if (user_query.has_artist()):
         out[service]=services[service].search(

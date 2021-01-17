@@ -1,5 +1,5 @@
+from backend.services import services
 from urllib.parse import urlparse
-from services import services
 
 def parse_url(url):
   '''
