@@ -1,5 +1,5 @@
-from search_components.spotify import Spotify
-from search_components.youtube import YouTube
+from service_components.spotify import Spotify
+from service_components.youtube import YouTube
 
 services = {
   'spotify': Spotify(),

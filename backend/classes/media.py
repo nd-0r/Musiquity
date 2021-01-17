@@ -1,4 +1,4 @@
-from ..search_services import services
+from ..services import services
 
 class Media:
 

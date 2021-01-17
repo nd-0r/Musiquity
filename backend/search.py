@@ -2,7 +2,7 @@ from classes.media import Media
 from classes.query import Query
 from urllib.parse import urlparse
 from parse_url import parse_url
-from search_services import services
+from services import services
 
 def search(text):
   user_query = None
