@@ -102,4 +102,3 @@ def search_spotify(user_query, result_limit=1, **kwargs):
   except KeyError:
     pass
   return out
-  
