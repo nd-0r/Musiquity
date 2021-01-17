@@ -44,5 +44,3 @@ class Media:
 
   def string(self):
     return f'{self.artist_name}, {self.title}, {self.media_type}'
-
-  

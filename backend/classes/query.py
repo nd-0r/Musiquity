@@ -19,3 +19,4 @@ class Query:
 
   def is_album(self):
     return self.media_type == 'album'
+    
