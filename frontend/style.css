@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 body {
     background-color: #98c1d9 !important;
@@ -101,7 +102,19 @@ li {
     text-decoration: none;
     color: black;
 }
-
-
-
+.button {
+    text-align: center;
+}
+input {
+    width: 30%;
+}
+div #search-text {
+    width: 100%;
+    margin-left: -23%;
+    margin-bottom: 5%;
+    font-family: 'Montserrat', sans-serif;
+}
+.nav-item {
+    width: 105px;
+}
 
