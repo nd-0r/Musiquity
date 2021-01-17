@@ -1,3 +1,6 @@
+import re
+from parse_components import *
+
 class Query:
 
   link = None

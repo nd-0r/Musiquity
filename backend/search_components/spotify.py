@@ -4,7 +4,7 @@ import requests
 import os
 import base64
 
-# get the Oauth token
+# get the Oauth tokens
 client_id = os.getenv('SPOTIFY_CLIENT')
 client_secret = os.getenv('SPOTIFY_SECRET')
 bytes_obj = bytes(client_id + ':' + client_secret, 'utf-8')
