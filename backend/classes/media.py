@@ -1,4 +1,4 @@
-from ..search_components.services import services
+from ..search_services import services
 
 class Media:
 
@@ -11,7 +11,7 @@ class Media:
   media_type = ''
 
   def __init__(self, service, **kwargs):
-    if (isinstance(self.service, str) and service in services):
+    if (isinstance(self.service, str) and service in services.keys()):
       self.service = service
     else:
       raise ValueError(f'Unsupported service: {service}')

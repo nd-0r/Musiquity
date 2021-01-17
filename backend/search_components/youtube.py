@@ -13,7 +13,7 @@ class YouTube:
   SERVICE = 'youtube'
 
   @staticmethod
-  def search_youtube(user_query, result_limit=1):
+  def search(user_query, result_limit=1, **kwargs):
     '''Takes a user query and the 
     results limit returns the results
     of the query
@@ -21,6 +21,7 @@ class YouTube:
     Parameters:
       user_query (Query): A query object
       result_limit (Int): The maximum number of results
+      kwargs (Dict): Not used-additional filters for the search
     
     Returns:
       results (List(Media)): A list of Media objects
@@ -73,6 +74,7 @@ class YouTube:
           media_type='song'
         )
       except KeyError:
-        raise RuntimeError(f'Could not get all information for the query from spotify')
+        raise RuntimeError(f'Could not get all information for the \
+                             query from spotify')
       out.append(tmp1)
       out.append(tmp2)
