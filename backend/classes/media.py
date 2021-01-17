@@ -1,5 +1,3 @@
-from ..search_services import services
-
 class Media:
 
   service = ''
@@ -11,10 +9,10 @@ class Media:
   media_type = ''
 
   def __init__(self, service, **kwargs):
-    if (isinstance(self.service, str) and service in services.keys()):
+    if (isinstance(self.service, str)):
       self.service = service
     else:
-      raise ValueError(f'Unsupported service: {service}')
+      raise TypeError(f'Invalid type for service: {type(service)}')
     try:
       self.artist_name = kwargs['artist_name']
       self.title = kwargs['title']
