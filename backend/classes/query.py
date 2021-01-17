@@ -4,8 +4,10 @@ class Query:
   
   artist = None
   title = None
-  link = None
-  image = None
+  media_type = None
 
   def __new__(input_link):
     link = input_link
+
+  def parse_link(link):
+
