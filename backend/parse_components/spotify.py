@@ -9,5 +9,11 @@ def parse_link(link):
   basis, recognizing that all desired data might not
   be acquired; at the very least, however, we need
   a title!
-  
+
+  Parameters:
+    link (string): the link to parse
+
+  Returns:
+    query (Query): the query object used to look up
+    the item on other platforms
   '''
