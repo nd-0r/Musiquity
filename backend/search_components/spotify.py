@@ -4,7 +4,7 @@ import requests
 import os
 import base64
 
-# get the Oauth tokens
+# get the Oauth token
 client_id = os.getenv('SPOTIFY_CLIENT')
 client_secret = os.getenv('SPOTIFY_SECRET')
 bytes_obj = bytes(client_id + ':' + client_secret, 'utf-8')
@@ -16,17 +16,16 @@ dat = {
   "grant_type": "client_credentials"
 }
 url = 'https://accounts.spotify.com/api/token'
-test = requests.request('POST', url, headers=head, data=dat)
-os.environ['SPOTIFY_OAUTH'] = test.json()['access_token']
+temp = requests.request('POST', url, headers=head, data=dat)
+os.environ['SPOTIFY_OAUTH'] = temp.json()['access_token']
 
 def search_spotify(user_query, result_limit=1, **kwargs):
-  '''Takes a user query as and the 
+  '''Takes a user query and the 
   results limit returns the results
   of the query
   
   Parameters:
     user_query (Query): A query object
-    user_query (String): A standard query
     result_limit (Int): The maximum number of results
     kwargs (Dict): Additional filters to apply to the query
       'album': specific text to look for in the album title
@@ -43,14 +42,14 @@ def search_spotify(user_query, result_limit=1, **kwargs):
   media_type = ''
   limit = 'limit=' + str(result_limit)
 
-  if (isinstance(user_query, str)):
-    query = "q=" + user_query
-  elif (isinstance(user_query, Query)):
-    query = user_query.get_title()
+  if (isinstance(user_query, Query)):
+    query = "q=" + user_query.get_title()
     if (query.is_song()):
       media_type = 'type=track'
     elif (query.is_album()):
       media_type = 'type=album'
+    else:
+      media_type = 'type=album,track'
     for k in kwargs.keys():
       query += '%20' + k + ':' + kwargs[k]
   else:
@@ -72,7 +71,7 @@ def search_spotify(user_query, result_limit=1, **kwargs):
   try:
     for album in query_response.json()['albums']['items']:
       try:
-        tmp = Media(
+        tmp = Media('spotify',
           artist_name=album['artists'][0]['name'],
           title=album['name'],
           link=album['external_urls']['spotify'],
@@ -88,7 +87,7 @@ def search_spotify(user_query, result_limit=1, **kwargs):
   try:
     for song in query_response.json()['tracks']['items']:
       try:
-        tmp = Media(
+        tmp = Media('spotify',
           artist_name=song['artists'][0]['name'],
           title=song['name'],
           link=song['external_urls']['spotify'],

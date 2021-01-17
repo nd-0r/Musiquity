@@ -1,5 +1,8 @@
+from ..search_components.services import services
+
 class Media:
 
+  service = ''
   artist_name = ''
   title = ''
   link = ''
@@ -7,7 +10,11 @@ class Media:
   markets = ''
   media_type = ''
 
-  def __init__(self, **kwargs):
+  def __init__(self, service, **kwargs):
+    if (isinstance(self.service, str) and service in services):
+      self.service = service
+    else:
+      raise ValueError(f'Unsupported service: {service}')
     try:
       self.artist_name = kwargs['artist_name']
       self.title = kwargs['title']
@@ -36,6 +43,6 @@ class Media:
     return f'Media("{self.string()}")'
 
   def string(self):
-    return f'{self.artist_name}, {self.title}, {self.media_type'
+    return f'{self.artist_name}, {self.title}, {self.media_type}'
 
   
