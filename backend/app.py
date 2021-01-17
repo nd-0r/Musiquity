@@ -1,33 +1,28 @@
-import flask
-from flask import json, Response
-from flask_cors import CORS
-from flask_api import FlaskAPI
-from search import Search
-APP = FlaskAPI(__name__)
-CORS(APP)
+from backend.search import search
+from flask import Flask
+from flask_restful import Resource, Api, reqparse
+import json
+APP = Flask(__name__)
+API = Api(APP)
 
-def get_json_response(filename):
-    labels_dict = {}
-    response_dict = {}
+parser = reqparse.RequestParser()
+
+class ResponseList(Resource):
+  def post(self):
+    parser.add_argument("q")
+    args = parser.parse_args()
     try:
-        with open(filename, 'r') as labels:
-            labels_dict = json.load(labels)
-        response_dict[STATUS] = "true"
-        response_dict["labels_mapping"] = labels_dict
-        js_dump = json.dumps(response_dict)
-        resp = Response(js_dump,status=200,
-                        mimetype='application/json')
-    except FileNotFoundError as err:
-        response_dict = {'error': 'file not found in server'}
-        js_dump = json.dumps(response_dict)
-        resp = Response(js_dump,status=500,
-                        mimetype='application/json')
-    except RuntimeError as err:
-        response_dict = {'error': 'error occured on server side. Please try again'}
-        js_dump = json.dumps(response_dict)
-        resp = Response(js_dump, status=500,
-                        mimetype='application/json')
-    return resp
+      out = json.dumps(
+        search(args['q']),
+        default=lambda o: o.__dict__,
+        sort_keys=True
+      )
+    except Exception as err:
+      print(err)
+      return '', 500
+    return out, 200
+
+API.add_resource(ResponseList, '/search/')
 
 if __name__ == '__main__':
-    APP.run(host='127.0.0.1', port=5000)
+    APP.run(host='127.0.0.1', port=5000, debug=True)

@@ -5,7 +5,7 @@ class Media:
   title = ''
   link = ''
   image_url = ''
-  markets = ''
+  # markets = ''
   media_type = ''
 
   def __init__(self, service, **kwargs):
@@ -18,7 +18,7 @@ class Media:
       self.title = kwargs['title']
       self.link = kwargs['link']
       self.image_url = kwargs['image_url']
-      self.markets = kwargs['markets']
+      # self.markets = kwargs['markets']
       self.media_type = kwargs['media_type']
       assert (self.media_type in ['album', 'song'])
     except KeyError:

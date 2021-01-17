@@ -88,7 +88,6 @@ class Spotify:
             title=album['name'],
             link=album['external_urls']['spotify'],
             image_url=album['images'][0],
-            markets=album['available_markets'],
             media_type='album'
           )
         except KeyError:
@@ -104,7 +103,6 @@ class Spotify:
             title=song['name'],
             link=song['external_urls']['spotify'],
             image_url=song['album']['images'][0],
-            markets=song['available_markets'],
             media_type='song'
           )
         except KeyError:

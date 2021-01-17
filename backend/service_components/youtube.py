@@ -73,7 +73,6 @@ class YouTube:
           title=item["snippet"]["title"],
           link=YOUTUBE_BASE_URL + item["id"]["videoId"],
           image_url=item["snippet"]["thumbnails"]["medium"]["url"],
-          markets=response['regionCode'],
           media_type='song'
         )
         tmp2 = Media(
@@ -82,7 +81,6 @@ class YouTube:
           title=item["snippet"]["title"],
           link=MUSIC_BASE_URL + item["id"]["videoId"],
           image_url=item["snippet"]["thumbnails"]["medium"]["url"],
-          markets=response['regionCode'],
           media_type='song'
         )
       except KeyError:
