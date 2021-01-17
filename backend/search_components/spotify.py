@@ -25,7 +25,7 @@ class Spotify:
   SERVICE = 'spotify'
 
   @staticmethod
-  def search_spotify(user_query, result_limit=1, **kwargs):
+  def search(user_query, result_limit=1, **kwargs):
     '''Takes a user query and the 
     results limit returns the results
     of the query
@@ -107,4 +107,3 @@ class Spotify:
     except KeyError:
       pass
     return out
-    
