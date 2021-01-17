@@ -16,7 +16,10 @@
     font-size: 12px;
     text-align: center;
 }
-
+/* Navbar */
+nav {
+    background-color: #98c1d9;
+}
 /* Refactor navbar items */
 .navbar-nav{
     margin-left: 85%;
