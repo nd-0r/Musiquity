@@ -101,7 +101,11 @@ li {
     text-decoration: none;
     color: black;
 }
-
-
+.button {
+    text-align: center;
+}
+input {
+    width: 30%;
+}
 
 
