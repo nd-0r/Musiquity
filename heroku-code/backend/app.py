@@ -1,5 +1,5 @@
 from backend.search import search
-from flask import Flask
+from flask import Flask, Response
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 import json
@@ -14,14 +14,14 @@ class ResponseList(Resource):
     parser.add_argument("q")
     args = parser.parse_args()
     try:
-      out = json.dumps(
+      out = str(json.dumps(
         search(args['q']),
         default=lambda o: o.__dict__,
         sort_keys=True
-      )
+      ))
     except Exception as err:
       print(err)
-      return '', 500
+      return 500
     return out, 200
 
 API.add_resource(ResponseList, '/search/')
