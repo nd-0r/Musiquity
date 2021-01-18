@@ -8,7 +8,7 @@ API = Api(APP)
 parser = reqparse.RequestParser()
 
 class ResponseList(Resource):
-  def post(self):
+  def get(self):
     parser.add_argument("q")
     args = parser.parse_args()
     try:
