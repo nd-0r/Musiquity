@@ -6,7 +6,11 @@ myForm.addEventListener("submit", (e) => {
 
     const request = new XMLHttpRequest();
 
-    request.open("get", "heroku-code/backend/search_components/youtube.py");
+    const url = 'https://musiquity.herokuapp.com/search/?q='
+
+    let query_text = myForm.nodeValue
+
+    request.open("get", url + query_text);
     request.onload = function() {
         console.log(request.responseText);
     }
