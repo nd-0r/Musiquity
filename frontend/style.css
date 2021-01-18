@@ -113,3 +113,10 @@ div #search-text {
     width: 100%;
 }
 
+.list {
+    height: 200px;
+    width: 200px;
+    background-color: #ccc;
+    margin-left: 20%;
+    margin-top: 50px;
+}
