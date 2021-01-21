@@ -1,20 +1,19 @@
 import React from 'react'
+import axios from 'axios'
 import logo from './logo.svg';
 import './App.css';
+import { render } from '@testing-library/react';
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.onSubmit = this.submitSearch.bind(this);
+    this.onSubmit = this.props.callback.bind(this);
     this.state = {
       searchText: '',
     };
   }
   handleSearch = function (text) {
     this.setState({ searchText: text })
-  }
-  submitSearch = () => {
-    console.log(this.state.searchText)
   }
   render() {
     return (
@@ -27,7 +26,7 @@ class SearchBar extends React.Component {
         />
         <button className = 'submitButton'
           onClick = {
-            () => this.submitSearch()
+            () => this.props.callback(this.state.searchText)
           }>
           Search
         </button>
@@ -36,26 +35,50 @@ class SearchBar extends React.Component {
   }
 }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      <SearchBar />
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  state = {
+    results: []
+  }
+
+  submitSearch = (text) => {
+    let base_url = 'https://musiquity.herokuapp.com/search/?q=';
+    let url_to_submit = base_url + text;
+    let newResults;
+    axios
+      .get(url_to_submit)
+      .then(response => {
+        newResults = JSON.parse(JSON.parse(
+          response.data
+        ));
+      });
+    this.setState({
+      results: newResults
+    });
+    console.log(this.results)
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        <SearchBar callback={submitSearch}/>
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;
