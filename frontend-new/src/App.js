@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import logo from './logo.svg';
 import './App.css';
-import { render } from '@testing-library/react';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -74,7 +73,7 @@ class App extends React.Component {
           >
             Learn React
           </a>
-        <SearchBar callback={submitSearch}/>
+        <SearchBar callback={this.submitSearch}/>
         </header>
       </div>
     );
