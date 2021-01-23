@@ -47,15 +47,11 @@ class App extends React.Component {
     axios
       .get(url_to_submit)
       .then(response => {
-        console.log(response.data);
-        newResults = JSON.parse(JSON.parse(
+        newResults = JSON.parse(
           response.data
-        ));
+        );
+        this.results = newResults;
       });
-    this.setState({
-      results: newResults
-    });
-    console.log(this.results)
   }
 
   render() {
@@ -76,6 +72,9 @@ class App extends React.Component {
           </a>
         <SearchBar callback={this.submitSearch}/>
         </header>
+        <div className="Search-results">
+          
+        </div>
       </div>
     );
   }

@@ -63,8 +63,6 @@ class YouTube:
       maxResults = result_limit
     )
 
-    request.add_header('referer', config('REFERER'))
-
     response = request.execute()
 
     for item in response["items"]:
@@ -125,8 +123,6 @@ class YouTube:
       part = "snippet",
       id = video_id
     )
-
-    request.add_header('referer', config('REFERER'))
 
     response = request.execute()
     title_tmp = response['items'][0]['snippet']['title']
