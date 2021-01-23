@@ -37,20 +37,31 @@ class SearchBar extends React.Component {
 class App extends React.Component {
 
   state = {
+    services: [],
     results: []
   }
 
   submitSearch = (text) => {
     let base_url = 'https://musiquity.herokuapp.com/search/?q=';
     let url_to_submit = base_url + text;
-    let newResults;
     axios
       .get(url_to_submit)
       .then(response => {
-        newResults = JSON.parse(
+        this.results = JSON.parse(
+          response.data
+        );;
+      });
+  }
+
+  componentDidMount() {
+    let url_to_submit = 'https://musiquity.herokuapp.com/services/';
+    axios
+      .get(url_to_submit)
+      .then(response => {
+        this.services = JSON.parse(
           response.data
         );
-        this.results = newResults;
+        console.log(this.services)
       });
   }
 
@@ -73,7 +84,7 @@ class App extends React.Component {
         <SearchBar callback={this.submitSearch}/>
         </header>
         <div className="Search-results">
-          
+
         </div>
       </div>
     );
