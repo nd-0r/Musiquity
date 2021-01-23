@@ -47,6 +47,7 @@ class App extends React.Component {
     axios
       .get(url_to_submit)
       .then(response => {
+        console.log(response.data);
         newResults = JSON.parse(JSON.parse(
           response.data
         ));
